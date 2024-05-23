@@ -9,7 +9,6 @@ import org.example.Controller.UserController;
 import org.example.DataAccess.DatabaseConnector;
 import org.example.DataAccess.UserDatabase;
 import org.example.Model.User;
-
 //TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
 // click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
 public class Main {

@@ -1,91 +1,8 @@
 package org.example.Model;
 
-<<<<<<< HEAD
-public class User {
-    private Contacts contacts ;
-    private Education education;
-    private String userId;
-    private String firstName;
-    private String lastName;
-    private String country;
-    private String city;
-    private String profession;
+import org.example.Model.Contacts;
+import org.example.Model.Education;
 
-    public User(Contacts contacts, Education education,String userId, String firstName, String lastName, String country, String city, String profession) {
-        this.contacts = contacts;
-        this.education = education;
-        this.userId=userId;
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.country = country;
-        this.city = city;
-        this.profession = profession;
-    }
-
-    public Contacts getContacts() {
-        return contacts;
-    }
-
-    public void setContacts(Contacts contacts) {
-        this.contacts = contacts;
-    }
-
-    public Education getEducation() {
-        return education;
-    }
-
-    public void setEducation(Education education) {
-        this.education = education;
-    }
-
-    public String getUserId() {
-        return userId;
-    }
-
-    public void setUserId(String userId) {
-        this.userId = userId;
-    }
-
-    public String getFirstName() {
-        return firstName;
-    }
-
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
-    }
-
-    public String getLastName() {
-        return lastName;
-    }
-
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
-    }
-
-    public String getCountry() {
-        return country;
-    }
-
-    public void setCountry(String country) {
-        this.country = country;
-    }
-
-    public String getCity() {
-        return city;
-    }
-
-    public void setCity(String city) {
-        this.city = city;
-    }
-
-    public String getProfession() {
-        return profession;
-    }
-
-    public void setProfession(String profession) {
-        this.profession = profession;
-    }
-=======
 import java.util.Date;
 
 public class User {
@@ -99,9 +16,11 @@ public class User {
   private String country;
   private Date birthday;
   private Date created_at;
+   // private Contacts contacts ;
+   // private Education education;
 
   public User(String id, String name, String lastName, String email, String phoneNumber,
-      String password, String country, Date birthday) {
+      String password, String country, Date birthday ) {
     this.id = id;
     this.name = name;
     this.lastName = lastName;
@@ -111,6 +30,8 @@ public class User {
     this.country = country;
     this.birthday = birthday;
     this.created_at = new Date(System.currentTimeMillis());
+  //  this.education = education;
+   // this.contacts = contacts ;
   }
 
   public Date getCreated_at() {
@@ -180,5 +101,26 @@ public class User {
   public void setBirthday(Date birthday) {
     this.birthday = birthday;
   }
->>>>>>> origin/reza
+
+    public void setCreated_at(Date created_at) {
+        this.created_at = created_at;
+    }
+
+   /* public Contacts getContacts() {
+        return contacts;
+    }
+
+    public void setContacts(Contacts contacts) {
+        this.contacts = contacts;
+    }
+
+    public Education getEducation() {
+        return education;
+    }
+
+    public void setEducation(Education education) {
+        this.education = education;
+    }
+
+    */
 }

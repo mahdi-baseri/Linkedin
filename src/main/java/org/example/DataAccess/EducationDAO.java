@@ -40,7 +40,7 @@ public class EducationDAO {
         statement.executeUpdate();
     }
     public void updateEducations(Education education) throws SQLException {
-        PreparedStatement statement = connection.prepareStatement("UPDATE bios SET nameschool = ?, fieldstudy = ?, startdate = ? , enddate = ? , descriptions = ? , skills = ? ,WHERE user_id = ?");
+        PreparedStatement statement = connection.prepareStatement("UPDATE educations SET nameschool = ?, fieldstudy = ?, startdate = ? , enddate = ? , descriptions = ? , skills = ? ,WHERE user_id = ?");
         statement.setString(1, education.getNameSchool());
         statement.setString(2, education.getFieldStudy());
         statement.setString(3, education.getDateStart().toString());
@@ -51,7 +51,7 @@ public class EducationDAO {
         statement.executeUpdate();
     }
     public Education getEducation(String userId) throws SQLException {
-        PreparedStatement statement = connection.prepareStatement("SELECT * FROM bios WHERE user_id = ?");
+        PreparedStatement statement = connection.prepareStatement("SELECT * FROM educations WHERE user_id = ?");
         statement.setString(1, userId);
         ResultSet resultSet = statement.executeQuery();
 

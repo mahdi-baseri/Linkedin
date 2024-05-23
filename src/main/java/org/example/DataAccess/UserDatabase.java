@@ -1,11 +1,12 @@
 package org.example.DataAccess;
 
+import org.example.Model.User;
+
 import java.sql.Connection;
 import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.sql.Statement;
-import org.example.Model.User;
 
 public class UserDatabase {
 
@@ -33,8 +34,8 @@ public class UserDatabase {
     statement.setString(6, user.getPassword());
     statement.setString(7, user.getCountry());
 //    here we cant cast Date to java.sql.date and because or that i add the java.sql.Date method
-    statement.setDate(8, new java.sql.Date(user.getBirthday().getTime()));
-    statement.setDate(9, new java.sql.Date(user.getCreated_at().getTime()));
+    statement.setDate(8, new Date(user.getBirthday().getTime()));
+    statement.setDate(9, new Date(user.getCreated_at().getTime()));
     statement.executeUpdate();
   }
 }
