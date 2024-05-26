@@ -5,6 +5,7 @@ import java.sql.SQLException;
 import org.example.DataAccess.UserDatabase;
 import org.example.Model.User;
 
+
 public class UserController {
 
   private static UserDatabase userDatabase;

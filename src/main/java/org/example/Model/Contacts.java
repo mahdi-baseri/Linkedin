@@ -16,6 +16,9 @@ public class Contacts {
         this.address = address;
         this.dateOfBirth = dateOfBirth;
     }
+    public Contacts() {
+
+    }
 
     public String getUserId() {
         return userId;
