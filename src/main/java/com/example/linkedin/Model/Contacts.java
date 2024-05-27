@@ -1,4 +1,4 @@
-package org.example.Model;
+package com.example.linkedin.Model;
 
 import java.util.Date;
 

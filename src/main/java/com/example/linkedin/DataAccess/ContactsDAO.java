@@ -1,8 +1,6 @@
-package org.example.DataAccess;
+package com.example.linkedin.DataAccess;
 
-import org.example.Model.Contacts;
-import org.example.Model.Education;
-
+import com.example.linkedin.Model.Contacts;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;

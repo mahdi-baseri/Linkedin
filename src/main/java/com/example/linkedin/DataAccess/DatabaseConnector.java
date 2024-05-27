@@ -1,4 +1,4 @@
-package org.example.DataAccess;
+package com.example.linkedin.DataAccess;
 
 import java.sql.Connection;
 import java.sql.DriverManager;

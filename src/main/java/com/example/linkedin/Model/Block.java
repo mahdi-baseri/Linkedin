@@ -1,4 +1,4 @@
-package org.example.Model;
+package com.example.linkedin.Model;
 
 public class Block {
     private String blocker;
