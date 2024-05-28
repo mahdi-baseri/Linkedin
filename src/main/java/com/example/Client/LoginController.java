@@ -1,6 +1,7 @@
-package com.example.Client.Controller;
+package com.example.Client;
 
 import com.example.Client.LoginPage;
+import com.example.Main;
 import com.example.linkedin.DataAccess.DatabaseConnector;
 import com.example.linkedin.DataAccess.UserDatabase;
 import com.example.linkedin.Model.User;
@@ -19,6 +20,7 @@ import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
+import javafx.scene.control.ProgressIndicator;
 import javafx.scene.control.TextField;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
@@ -39,10 +41,9 @@ public class LoginController {
   private String password;
   private Connection connection;
   private UserDatabase userDatabase;
-  Stage stage;
-  Parent root;
   @FXML
   private Button loginBtn;
+  private ProgressIndicator progressIndicator;
 
   public LoginController() throws SQLException {
     userDatabase = new UserDatabase();
@@ -51,13 +52,14 @@ public class LoginController {
   }
 
   @FXML
-  protected void submit(ActionEvent event) throws SQLException, IOException {
+  private void submit(ActionEvent event) throws SQLException, IOException {
     username = userField.getText();
     password = passField.getText();
     for (User user : userDatabase.getUsers()) {
       if (!userDatabase.userExists(username)) {
         warnning.setText("User not exists");
         warnning.setTextFill(Color.RED);
+
 //        System.out.println("username : " + username + "\n" + "password :" + password);
       } else if (!user.getPassword().equals(password)) {
         warnning.setText("Wrong password");
@@ -69,8 +71,21 @@ public class LoginController {
 //        Alert alert = new Alert(AlertType.INFORMATION);
 //        alert.setHeaderText("Welcome Back " + username);
 //        alert.show();
-
+        Parent loader = FXMLLoader.load(getClass().getResource("profile-view.fxml"));
+        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+//        Scene scene = new Scene(fxmlLoader, 600, 400);
+        stage.setScene(new Scene(loader));
+        stage.show();
       }
     }
+  }
+
+  @FXML
+  private void register(ActionEvent event) throws IOException {
+    Parent loader = FXMLLoader.load(getClass().getResource("register-view.fxml"));
+    Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+//        Scene scene = new Scene(fxmlLoader, 600, 400);
+    stage.setScene(new Scene(loader));
+    stage.show();
   }
 }

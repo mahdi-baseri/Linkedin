@@ -114,4 +114,22 @@ public class UserDatabase {
     }
     return false;
   }
+
+  public boolean idExists(String id) throws SQLException {
+    for (User user : getUsers()) {
+      if (user.getId().equals(id)) {
+        return true;
+      }
+    }
+    return false;
+  }
+
+  public boolean emailExists(String email) throws SQLException {
+    for (User user : getUsers()) {
+      if (user.getEmail().equals(email)) {
+        return true;
+      }
+    }
+    return false;
+  }
 }
