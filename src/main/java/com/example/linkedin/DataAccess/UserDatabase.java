@@ -19,7 +19,7 @@ public class UserDatabase {
 
   public void createTable() throws SQLException {
     PreparedStatement statement = connection.prepareStatement(
-        "CREATE TABLE IF NOT EXISTS users (id VARCHAR(255) NOT NULL , name VARCHAR(255) NOT NULL , lastName VARCHAR(255) NOT NULL , email VARCHAR(255) NOT NULL , phoneNumber VARCHAR(12) NOT NULL , password VARCHAR(255) NOT NULL , country VARCHAR(255) NOT NULL , birthday DATE NOT NULL , created_at DATE NOT NULL , PRIMARY KEY (id)) ENGINE = InnoDB;");
+        "CREATE TABLE IF NOT EXISTS users (id VARCHAR(255) NOT NULL , name VARCHAR(255) NOT NULL , lastName VARCHAR(255) NOT NULL , email VARCHAR(255) NOT NULL , phoneNumber VARCHAR(12) NOT NULL , password VARCHAR(255) NOT NULL , country VARCHAR(255) NOT NULL , birthday DATE NOT NULL , created_at DATE NOT NULL , PRIMARY KEY (id)) ENGINE = InnoDB");
     statement.executeUpdate();
   }
 
@@ -34,10 +34,10 @@ public class UserDatabase {
     statement.setString(4, user.getEmail());
     statement.setString(5, user.getPhoneNumber());
     statement.setString(6, user.getPassword());
-    statement.setString(7, user.getCountry());
+    statement.setString(7, "Tehran");
 //    here we cant cast Date to java.sql.date and because or that i add the java.sql.Date method
-    statement.setDate(8, new Date(user.getBirthday().getTime()));
-    statement.setDate(9, new Date(user.getCreated_at().getTime()));
+   statement.setDate(8, new Date(2024,5,2));
+   statement.setDate(9, new Date(user.getCreated_at().getTime()));
     statement.executeUpdate();
   }
 

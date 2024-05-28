@@ -15,15 +15,15 @@ public class User {
   private Date created_at;
 
   public User(String id, String name, String lastName, String email, String phoneNumber,
-      String password, String country, Date birthday) {
+      String password) {
     this.id = id;
     this.name = name;
     this.lastName = lastName;
     this.email = email;
     this.phoneNumber = phoneNumber;
     this.password = password;
-    this.country = country;
-    this.birthday = birthday;
+//    this.country = country;
+//    this.birthday = birthday;
     this.created_at = new Date(System.currentTimeMillis());
   }
 

@@ -11,8 +11,7 @@ import java.sql.SQLException;
 public class Main {
 
   public static void main(String[] args) throws SQLException {
-    User user = new User("123", "mamad", "asghari", "sanafas6961@gmail.com", "09371962511",
-        "mamad", "Iran", new Date(2024, 7, 16));
+    User user = new User("45fdcfsxgsedfd4165", "mamad", "asghari", "sanafas6961@gmail.com", "09371962511","123");
     UserDatabase userDatabase = new UserDatabase();
     userDatabase.addUser(user);
   }
