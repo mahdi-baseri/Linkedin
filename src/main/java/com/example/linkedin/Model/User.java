@@ -15,7 +15,7 @@ public class User {
   private Date created_at;
 
   public User(String id, String name, String lastName, String email, String phoneNumber,
-      String password) {
+              String password) {
     this.id = id;
     this.name = name;
     this.lastName = lastName;
@@ -97,5 +97,20 @@ public class User {
 
   public void setBirthday(Date birthday) {
     this.birthday = birthday;
+  }
+
+  @Override
+  public String toString() {
+    return "User" +
+            "id= '" + id + '\'' +
+            ", firstName= '" + name + '\'' +
+            ", lastName= '" + lastName + '\'' +
+            ", email= '" + email + '\'' +
+            ", phoneNumber= '" + phoneNumber + '\'' +
+            ", password= '" + password + '\'' +
+            ", country= '" + country + '\'' +
+            ", birthday= " + birthday
+           // ", createdAt=" + created_at.toString() +
+            ;
   }
 }

@@ -26,6 +26,9 @@ public class UserDatabase {
   // add a user to db
   public void addUser(User user) throws SQLException {
 //    here we add our user data to the table user from the database
+    if (emailExists(user.getEmail())==true) {
+      System.out.println("user already exist . please change email");
+    }
     PreparedStatement statement = connection.prepareStatement(
         "INSERT INTO users VALUES (?,?,?,?,?,?,?,?,?)");
     statement.setString(1, user.getId());
@@ -106,9 +109,9 @@ public class UserDatabase {
     return users;
   }
 
-  public boolean userExists(String usename) throws SQLException {
+  public boolean userExists(String username) throws SQLException {
     for (User user : getUsers()) {
-      if (user.getName().equals(usename)) {
+      if (user.getName().equals(username)) {
         return true;
       }
     }
