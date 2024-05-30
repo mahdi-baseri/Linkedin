@@ -4,7 +4,11 @@ import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
 import java.io.IOException;
 import java.io.*;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.sql.SQLException;
+import java.util.Date;
+
 public class UserHandler implements HttpHandler {
     private final UserController userController;
 
@@ -15,13 +19,9 @@ public class UserHandler implements HttpHandler {
     @Override
     public void handle(HttpExchange exchange) throws IOException {
         String method = exchange.getRequestMethod();
-        System.out.println("the methode is :"+method);
         String path = exchange.getRequestURI().getPath();
-        System.out.println("the path is :"+path);
         String response = "";
         String[] splittedPath = path.split("/");
-        System.out.println(splittedPath.length);
-
         switch (method) {
             case "GET":
                 if (splittedPath.length == 2) {
@@ -44,8 +44,23 @@ public class UserHandler implements HttpHandler {
 
             case "PUT":
                 response = "This is the response for users' PUT request.";
-                break;
 
+                break;
+            case "POST" :
+                try{
+                String id = splittedPath[2] ;
+                String firstName = splittedPath[3];
+                String lastName = splittedPath[4];
+                String email = splittedPath[5];
+                String phoneNumber = splittedPath[6];
+                String password = splittedPath[7];
+                userController.createUser(id, firstName, lastName, email, phoneNumber, password);
+                response = "User created successfully!";
+        } catch (Exception e) {
+            e.printStackTrace();
+            response = "User creation failed!";
+        }
+        break;
             case "DELETE":
                 if (splittedPath.length != 2) {
                     String userId = splittedPath[splittedPath.length - 1];
