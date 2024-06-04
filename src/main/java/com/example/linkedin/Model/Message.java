@@ -1,10 +1,13 @@
 package com.example.linkedin.Model;
-
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class Message {
     private String id;
+
     private String sender;
+
     private String receiver;
+
     private String text;
 
     public Message () {

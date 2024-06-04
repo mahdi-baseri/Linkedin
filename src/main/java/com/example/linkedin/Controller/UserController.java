@@ -2,6 +2,8 @@ package com.example.linkedin.Controller;
 
 import com.example.linkedin.DataAccess.UserDatabase;
 import com.example.linkedin.Model.User;
+import com.google.gson.Gson;
+
 import java.sql.Date;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -34,21 +36,19 @@ public class UserController {
   }
   public String getUsers() throws SQLException {
     ArrayList<User> users = userDatabase.getUsers();
-    StringBuilder response = new StringBuilder();
-
-    for (User user : users) {
-      response.append(user.toString()).append("\n");
-    }
-
-    return response.toString();
+    Gson gson = new Gson();
+    String response = gson.toJson(users);
+    return response;
   }
+
 
   public String getUserById(String id) throws SQLException {
     User user = userDatabase.getUser(id);
-    if (user == null) {
-      return "No User";
-    }
-    return user.toString();
+    if (user == null) return "No User";
+    Gson gson = new Gson();
+    String response = gson.toJson(user);
+    return response;
   }
+
 
 }

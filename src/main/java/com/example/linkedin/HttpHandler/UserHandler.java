@@ -1,5 +1,7 @@
 package com.example.linkedin.HttpHandler;
 import com.example.linkedin.Controller.UserController;
+import com.example.linkedin.Model.User;
+import com.google.gson.Gson;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
 import java.io.IOException;
@@ -47,20 +49,24 @@ public class UserHandler implements HttpHandler {
 
                 break;
             case "POST" :
-                try{
-                String id = splittedPath[2] ;
-                String firstName = splittedPath[3];
-                String lastName = splittedPath[4];
-                String email = splittedPath[5];
-                String phoneNumber = splittedPath[6];
-                String password = splittedPath[7];
-                userController.createUser(id, firstName, lastName, email, phoneNumber, password);
-                response = "User created successfully!";
-        } catch (Exception e) {
-            e.printStackTrace();
-            response = "User creation failed!";
-        }
-        break;
+                InputStream requestBody = exchange.getRequestBody();
+                BufferedReader reader = new BufferedReader(new InputStreamReader(requestBody));
+                StringBuilder body = new StringBuilder();
+                String line;
+                while ((line = reader.readLine()) != null) {
+                    body.append(line);
+                }
+                requestBody.close();
+                String newUser = body.toString();
+                Gson gson = new Gson() ;
+                User user = gson.fromJson(newUser , User.class);
+                try {
+                    userController.createUser(user.getId() , user.getName() , user.getLastName(),user.getEmail() , user.getPhoneNumber() , user.getPassword());
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
+                response = "done";
+                break;
             case "DELETE":
                 if (splittedPath.length != 2) {
                     String userId = splittedPath[splittedPath.length - 1];
