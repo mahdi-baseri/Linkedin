@@ -102,20 +102,20 @@ private void checkEmpty(){
     nameWarning.setTextFill(Color.RED);
   }else {
     nameWarning.setText("Valid");
-    nameWarning.setTextFill(Color.GREEN);
+    nameWarning.setTextFill(Color.WHITE);
   }
   if (lastName.getText().isEmpty()){
     lastNameWarning.setText("Empty");
     lastNameWarning.setTextFill(Color.RED);
   }else {
     lastNameWarning.setText("Valid");
-    lastNameWarning.setTextFill(Color.GREEN);
+    lastNameWarning.setTextFill(Color.WHITE);
   } if (password.getText().isEmpty()){
     passwordWarning.setText("Empty");
     passwordWarning.setTextFill(Color.RED);
   }else {
     passwordWarning.setText("Valid");
-    passwordWarning.setTextFill(Color.GREEN);
+    passwordWarning.setTextFill(Color.WHITE);
   }
 }
   private void checkEmail(String email) throws SQLException {
@@ -129,14 +129,14 @@ private void checkEmpty(){
 
     } else if (!pat.matcher(email).matches()) {
       emailWarning.setText("Not Valid");
-      emailWarning.setTextFill(Color.RED);
+      emailWarning.setTextFill(Color.WHITE);
 
     } else if (userDatabase.emailExists(email)) {
       emailWarning.setText("Email Exists");
       emailWarning.setTextFill(Color.RED);
     } else {
       emailWarning.setText("Valid");
-      emailWarning.setTextFill(Color.GREEN);
+      emailWarning.setTextFill(Color.WHITE);
       validEmail = true;
 
     }
@@ -151,7 +151,7 @@ private void checkEmpty(){
       idWarning.setTextFill(Color.RED);
     } else {
       idWarning.setText("Valid");
-      idWarning.setTextFill(Color.GREEN);
+      idWarning.setTextFill(Color.WHITE);
       validId = true;
     }
   }
@@ -169,7 +169,7 @@ private void checkEmpty(){
     }
     else {
       phoneNumberWarning.setText("Valid");
-      phoneNumberWarning.setTextFill(Color.GREEN);
+      phoneNumberWarning.setTextFill(Color.WHITE);
       validPhoneNumber = true;
     }
   }

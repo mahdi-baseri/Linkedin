@@ -87,7 +87,26 @@ public class UserDatabase {
 
     return null;
   }
+  public User getUserByEmail(String email) throws SQLException {
+    PreparedStatement statement = connection.prepareStatement("SELECT * FROM users WHERE email = ?");
+    statement.setString(1, email);
+    ResultSet result = statement.executeQuery();
 
+    if (result.next()) {
+      User user = new User();
+      user.setId(result.getString("id"));
+      user.setName(result.getString("name"));
+      user.setLastName(result.getString("lastName"));
+      user.setEmail(result.getString("email"));
+      user.setPhoneNumber(result.getString("phoneNumber"));
+      user.setPassword(result.getString("password"));
+      user.setCountry(result.getString("country"));
+      user.setBirthday(result.getDate("birthday"));
+      return user;
+    }
+
+    return null;
+  }
   // get all users
   public ArrayList<User> getUsers() throws SQLException {
     ArrayList<User> users = new ArrayList<>();
