@@ -1,0 +1,25 @@
+Manifest-Version: 1.0
+Implementation-Title: JJWT :: Legacy Transitive Dependency Jar
+Implementation-Version: 0.12.6
+Specification-Vendor: jsonwebtoken.io
+Built-By: lhazlewood
+Tool: Bnd-3.5.0.201709291849
+Bundle-Name: JJWT :: Legacy Transitive Dependency Jar
+Created-By: Apache Maven Bundle Plugin
+Implementation-URL: https://github.com/jwtk/jjwt/jjwt
+Bundle-Vendor: jsonwebtoken.io
+Implementation-Vendor: jsonwebtoken.io
+Implementation-Vendor-Id: io.jsonwebtoken
+Build-Jdk-Spec: 1.7
+Bundle-Version: 0.12.6
+Build-Jdk: 1.7.0_352
+Bnd-LastModified: 1718999528203
+Bundle-ManifestVersion: 2
+Specification-Title: JJWT :: Legacy Transitive Dependency Jar
+Bundle-License: https://www.apache.org/licenses/LICENSE-2.0
+Bundle-Description: Legacy dependency. Please update your dependencies
+  as documented here:        https://github.com/jwtk/jjwt#installation
+Bundle-SymbolicName: io.jsonwebtoken.jjwt
+Bundle-DocURL: https://github.com/jwtk/jjwt
+Specification-Version: 0.12.6
+
