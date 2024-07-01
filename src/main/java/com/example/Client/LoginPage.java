@@ -5,7 +5,6 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
-
 import java.io.IOException;
 
 public class LoginPage extends Application {
@@ -24,4 +23,5 @@ public class LoginPage extends Application {
   public static void main(String[] args) {
     launch();
   }
+
 }

@@ -3,7 +3,8 @@ package com.example.linkedin.Controller;
 import com.example.linkedin.DataAccess.UserDatabase;
 import com.example.linkedin.Model.User;
 import com.google.gson.Gson;
-
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import java.sql.Date;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -48,6 +49,26 @@ public class UserController {
     Gson gson = new Gson();
     String response = gson.toJson(user);
     return response;
+  }
+
+  public String getUserByEmail(String email) throws SQLException, JsonProcessingException {
+    User user = userDatabase.getUser(email);
+    if (user == null) {
+      return null;
+    } else {
+      ObjectMapper objectMapper = new ObjectMapper();
+      return objectMapper.writeValueAsString(user);
+    }
+  }
+
+  public String getUserByEmailAndPassword(String email, String password) throws SQLException, JsonProcessingException {
+    User user = userDatabase.getUser(email, password);
+    if (user == null) {
+      return null;
+    } else {
+      ObjectMapper objectMapper = new ObjectMapper();
+      return objectMapper.writeValueAsString(user);
+    }
   }
 
 

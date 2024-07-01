@@ -107,6 +107,27 @@ public class UserDatabase {
 
     return null;
   }
+
+  public User getUser(String email, String password) throws SQLException {
+    PreparedStatement statement = connection.prepareStatement("SELECT * FROM users WHERE email = ? AND password = ?");
+    statement.setString(1, email);
+    statement.setString(2, password);
+    ResultSet result = statement.executeQuery();
+    User user = new User();
+    if (result.next()) {
+      user.setPhoneNumber(result.getString("phoneNumber"));
+      user.setId(result.getString("id"));
+      user.setEmail(result.getString("email"));
+      user.setCountry(result.getString("country"));
+      user.setName(result.getString("name"));
+      user.setLastName(result.getString("lastname"));
+      user.setBirthday(result.getDate("birthday"));
+      user.setPassword(result.getString("password"));
+    } else {
+      return null;
+    }
+    return user;
+  }
   // get all users
   public ArrayList<User> getUsers() throws SQLException {
     ArrayList<User> users = new ArrayList<>();
