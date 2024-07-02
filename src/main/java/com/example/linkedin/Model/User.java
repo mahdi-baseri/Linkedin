@@ -14,21 +14,29 @@ public class User {
   private Date birthday;
   private Date created_at;
 
-  public User(String id, String name, String lastName, String email, String phoneNumber,
-              String password) {
+  public User(String id, String name, String lastName, String country, String email,
+              String phoneNumber , String password) {
     this.id = id;
     this.name = name;
     this.lastName = lastName;
     this.email = email;
     this.phoneNumber = phoneNumber;
     this.password = password;
-//    this.country = country;
+    this.country = country;
 //    this.birthday = birthday;
     this.created_at = new Date(System.currentTimeMillis());
   }
 
   public User() {
 
+  }
+  public User(String name , String lastName , String country , String email , String phoneNumber , String password){
+    this.name = name;
+    this.lastName = lastName;
+    this.email = email;
+    this.phoneNumber = phoneNumber;
+    this.password = password;
+    this.country = country;
   }
 
   public Date getCreated_at() {

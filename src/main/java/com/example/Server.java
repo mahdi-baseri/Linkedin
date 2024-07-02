@@ -15,7 +15,7 @@ public class Server {
   public static void main(String[] args) throws IOException, SQLException {
     InetAddress inetAddress = InetAddress.getByName("127.0.0.1");
     HttpServer server = HttpServer.create(new InetSocketAddress(inetAddress, Integer.parseInt("8000")) , 0);
-    server.createContext("/user" , new UserHandler());
+    server.createContext("/user" , new UserHandler()); // sign up
     server.createContext("/login", new LoginHandler()); //for login
     server.start();
 }

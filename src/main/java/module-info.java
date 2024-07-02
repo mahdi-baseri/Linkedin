@@ -19,7 +19,8 @@ module com.example.linkedin {
     requires jjwt.api;
   requires com.fasterxml.jackson.databind;
   requires java.net.http;
-  // add icon pack modules
+    requires json.simple;
+    // add icon pack modules
   opens com.example.Client to javafx.fxml;
 
 }

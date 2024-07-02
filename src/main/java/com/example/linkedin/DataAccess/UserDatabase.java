@@ -19,7 +19,7 @@ public class UserDatabase {
 
   public void createTable() throws SQLException {
     PreparedStatement statement = connection.prepareStatement(
-        "CREATE TABLE IF NOT EXISTS users (id VARCHAR(255) NOT NULL , name VARCHAR(255) NOT NULL , lastName VARCHAR(255) NOT NULL , email VARCHAR(255) NOT NULL , phoneNumber VARCHAR(12) NOT NULL , password VARCHAR(255) NOT NULL , country VARCHAR(255) NOT NULL , birthday DATE NOT NULL , created_at DATE NOT NULL , PRIMARY KEY (id)) ENGINE = InnoDB");
+        "CREATE TABLE IF NOT EXISTS users (id VARCHAR(255) NOT NULL , name VARCHAR(255) NOT NULL , lastName VARCHAR(255) NOT NULL , country VARCHAR(255) NOT NULL , email VARCHAR(255) NOT NULL , phoneNumber VARCHAR(12) NOT NULL , password VARCHAR(255) NOT NULL  , created_at DATE NOT NULL , PRIMARY KEY (id)) ENGINE = InnoDB");
     statement.executeUpdate();
   }
 
@@ -28,20 +28,21 @@ public class UserDatabase {
 //    here we add our user data to the table user from the database
     if (emailExists(user.getEmail())==true) {
       System.out.println("user already exist . please change email");
-    }
-    PreparedStatement statement = connection.prepareStatement(
-        "INSERT INTO users VALUES (?,?,?,?,?,?,?,?,?)");
-    statement.setString(1, user.getId());
-    statement.setString(2, user.getName());
-    statement.setString(3, user.getLastName());
-    statement.setString(4, user.getEmail());
-    statement.setString(5, user.getPhoneNumber());
-    statement.setString(6, user.getPassword());
-    statement.setString(7, "Tehran");
+    }else {
+      PreparedStatement statement = connection.prepareStatement(
+              "INSERT INTO users VALUES (?,?,?,?,?,?,?,?)");
+      statement.setString(1, user.getId());
+      statement.setString(2, user.getName());
+      statement.setString(3, user.getLastName());
+      statement.setString(4, user.getEmail());
+      statement.setString(5, user.getPhoneNumber());
+      statement.setString(6, user.getPassword());
+      statement.setString(7, user.getCountry());
 //    here we cant cast Date to java.sql.date and because or that i add the java.sql.Date method
-   statement.setDate(8, new Date(2024,5,2));
-   statement.setDate(9, new Date(user.getCreated_at().getTime()));
-    statement.executeUpdate();
+      statement.setDate(8 , user.getCreated_at());
+   //   statement.setDate(9, new Date(2023, 6, 4));
+      statement.executeUpdate();
+    }
   }
 
   // delete a user from users table
@@ -54,14 +55,13 @@ public class UserDatabase {
   //  update a user's information
   public void updateUser(User user) throws SQLException {
     PreparedStatement statement = connection.prepareStatement(
-        "UPDATE users SET name = ?, lastname = ?, email = ?, phoneNumber = ?, password = ?, country = ?, birthday = ? WHERE id = ?");
+        "UPDATE users SET name = ?, lastname = ?, email = ?, phoneNumber = ?, password = ?, country = ?, WHERE id = ?");
     statement.setString(1, user.getName());
     statement.setString(2, user.getLastName());
     statement.setString(3, user.getEmail());
     statement.setString(4, user.getPhoneNumber());
     statement.setString(5, user.getPassword());
     statement.setString(6, user.getCountry());
-    statement.setDate(7, new Date(user.getBirthday().getTime()));
     statement.setString(8, user.getId());
     statement.executeUpdate();
   }
@@ -81,7 +81,6 @@ public class UserDatabase {
       user.setPhoneNumber(result.getString("phoneNumber"));
       user.setPassword(result.getString("password"));
       user.setCountry(result.getString("country"));
-      user.setBirthday(result.getDate("birthday"));
       return user;
     }
 
@@ -101,7 +100,6 @@ public class UserDatabase {
       user.setPhoneNumber(result.getString("phoneNumber"));
       user.setPassword(result.getString("password"));
       user.setCountry(result.getString("country"));
-      user.setBirthday(result.getDate("birthday"));
       return user;
     }
 
@@ -121,7 +119,6 @@ public class UserDatabase {
       user.setCountry(result.getString("country"));
       user.setName(result.getString("name"));
       user.setLastName(result.getString("lastname"));
-      user.setBirthday(result.getDate("birthday"));
       user.setPassword(result.getString("password"));
     } else {
       return null;
@@ -142,7 +139,6 @@ public class UserDatabase {
       user.setPhoneNumber(result.getString("phoneNumber"));
       user.setPassword(result.getString("password"));
       user.setCountry(result.getString("country"));
-      user.setBirthday(result.getDate("birthday"));
       users.add(user);
     }
 

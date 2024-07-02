@@ -102,7 +102,7 @@ public class LoginController {
 
     @FXML
     private void register (ActionEvent event) throws IOException {
-      Parent loader = FXMLLoader.load(getClass().getResource("register-view.fxml"));
+      Parent loader = FXMLLoader.load(getClass().getResource("registerr-view.fxml"));
       Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
       stage.setScene(new Scene(loader));
       stage.show();

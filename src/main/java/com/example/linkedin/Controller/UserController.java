@@ -18,9 +18,14 @@ public class UserController {
     userDatabase = new UserDatabase();
   }
 
-  public static void createUser(String id, String name, String lastName, String email,
-      String phoneNumber, String password) throws SQLException {
-    User user = new User(id, name, lastName, email, phoneNumber, password);
+//  public static void createUser2(String id, String name, String lastName, String email,
+//      String phoneNumber, String password) throws SQLException {
+//    User user = new User(id, name, lastName, email, phoneNumber, password);
+//    userDatabase.addUser(user);
+//  }
+  public static void createUser(String id ,String name, String lastName, String country, String email,
+                                String phoneNumber, String password) throws SQLException {
+    User user = new User(id , name, lastName, country, email, phoneNumber, password);
     userDatabase.addUser(user);
   }
 
