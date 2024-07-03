@@ -12,16 +12,18 @@ public class Education {
     private String DescriptionActivity;
     private String Description;
     private String skills;
+    private String degree ;
+    private String grade ;
+    private String email ;
 
-    public Education(String userId, String nameSchool, String fieldStudy, Date dateStart, Date dateEnd, String descriptionActivity, String description, String skills) {
-        this.userId=userId;
+    public Education(String nameSchool, String degree,String fieldStudy, String grade, String descriptionActivity, String description, String skills ,String email) {
         this.nameSchool = nameSchool;
         this.fieldStudy = fieldStudy;
-        this.dateStart = dateStart;
-        this.dateEnd = dateEnd;
-        DescriptionActivity = descriptionActivity;
-        Description = description;
+       this.DescriptionActivity = descriptionActivity;
+        this.Description = description;
         this.skills = skills;
+        this.grade = grade;
+        this.email = email ;
     }
     public Education(){
 
@@ -67,6 +69,12 @@ public class Education {
     public void setDateEnd(Date dateEnd) {
         this.dateEnd = dateEnd;
     }
+    public String getDegree(){
+        return degree ;
+    }
+    public String getGrade(){
+        return grade;
+    }
 
     public String getDescriptionActivity() {
         return DescriptionActivity;
@@ -90,5 +98,20 @@ public class Education {
 
     public void setSkills(String skills) {
         this.skills = skills;
+    }
+
+    public void setDegree(String degree) {
+        this.degree = degree;
+    }
+
+    public void setGrade(String grade) {
+        this.grade = grade ;
+    }
+
+    public void setEmail(String email) {
+        this.email = email ;
+    }
+    public String getEmail(){
+        return email;
     }
 }

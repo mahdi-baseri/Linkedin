@@ -1,5 +1,6 @@
 package com.example;
 
+import com.example.linkedin.HttpHandler.EducationHandler;
 import com.example.linkedin.HttpHandler.LoginHandler;
 import com.example.linkedin.HttpHandler.UserHandler;
 import com.sun.net.httpserver.HttpServer;
@@ -15,6 +16,7 @@ public class Server {
   public static void main(String[] args) throws IOException, SQLException {
     InetAddress inetAddress = InetAddress.getByName("127.0.0.1");
     HttpServer server = HttpServer.create(new InetSocketAddress(inetAddress, Integer.parseInt("8000")) , 0);
+    server.createContext("/education" , new EducationHandler());
     server.createContext("/user" , new UserHandler()); // sign up
     server.createContext("/login", new LoginHandler()); //for login
     server.start();

@@ -76,9 +76,11 @@ public class LoginController {
             response1.append(inputline);
           }
           in.close();
+//          LoginPage.token = con.getHeaderField("JWT");
+//          System.out.println(LoginPage.token);
 
           // change scene to profile
-          Parent loader = FXMLLoader.load(getClass().getResource("profile-view.fxml"));
+          Parent loader = FXMLLoader.load(getClass().getResource("profilee-view.fxml"));
           Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
           stage.setScene(new Scene(loader));
           stage.show();

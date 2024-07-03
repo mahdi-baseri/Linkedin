@@ -24,7 +24,6 @@ public class UserHandler implements HttpHandler {
         }
 
         String request = exchange.getRequestMethod();
-        System.out.println(request);
         String path = exchange.getRequestURI().getPath();
         String[] splittedPath = path.split("/");
         String response = "";
@@ -112,7 +111,7 @@ public class UserHandler implements HttpHandler {
             while ((line = reader.readLine()) != null) {
                 body.append(line);
             }
-            System.out.println(body);
+          //  System.out.println(body);
             return new JSONObject(body.toString());
         }
     }

@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.shape.Circle?>
+<?import javafx.scene.text.Text?>
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.Client.ProfileController">
+   <left>
+      <AnchorPane prefHeight="500.0" prefWidth="186.0" BorderPane.alignment="CENTER">
+         <children>
+            <Circle fill="#e8e9ea" layoutX="92.0" layoutY="72.0" radius="35.0" stroke="WHITE" strokeType="INSIDE" />
+            <FontAwesomeIconView fill="#0598ff" glyphName="USER" layoutX="80.0" layoutY="85.0" size="35" />
+            <VBox layoutY="164.0" prefHeight="336.0" prefWidth="188.0">
+               <children>
+                  <Button fx:id="profileBtn" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" nodeOrientation="LEFT_TO_RIGHT" prefHeight="30.0" prefWidth="188.0" style="-fx-background-color: #0598ff;" text="Profile" textFill="WHITE" />
+               </children>
+            </VBox>
+         </children>
+      </AnchorPane>
+   </left>
+   <right>
+      <AnchorPane prefHeight="500.0" prefWidth="634.0" BorderPane.alignment="CENTER">
+         <children>
+            <VBox fx:id="vbox" layoutX="138.0" layoutY="36.0" prefHeight="458.0" prefWidth="306.0" style="-fx-background-color: transparent; -fx-border-color: #0000;" visible="true">
+               <children>
+                  <Text fill="#0598ff" stroke="BLACK" strokeType="OUTSIDE" strokeWidth="0.0" text="School" underline="true" wrappingWidth="92.02835083007812" />
+                  <TextField fx:id="schoolTxt" blendMode="SRC_ATOP" prefHeight="20.0" prefWidth="306.0" promptText="Ex : AmirKabir University" style="-fx-background-color: transparent; -fx-border-color: #0598ff; -fx-border-width: 0px 0px 2px 0px;" />
+                  <Text fill="#0598ff" layoutX="10.0" layoutY="23.0" stroke="BLACK" strokeType="OUTSIDE" strokeWidth="0.0" text="Degree" underline="true" wrappingWidth="92.02835083007812" />
+                  <TextField fx:id="degreeTxt" blendMode="SRC_ATOP" layoutX="10.0" layoutY="28.0" prefHeight="20.0" prefWidth="306.0" promptText="Ex : Bachelor" style="-fx-background-color: transparent; -fx-border-color: #0598ff; -fx-border-width: 0px 0px 2px 0px;" />
+                  <Text fill="#0598ff" layoutX="10.0" layoutY="67.0" stroke="BLACK" strokeType="OUTSIDE" strokeWidth="0.0" text="Field Of Study" underline="true" wrappingWidth="92.02835083007812" />
+                  <TextField fx:id="fieldOfStudyTxt" blendMode="SRC_ATOP" layoutX="10.0" layoutY="72.0" prefHeight="20.0" prefWidth="306.0" promptText="Ex : Business" style="-fx-background-color: transparent; -fx-border-color: #0598ff; -fx-border-width: 0px 0px 2px 0px;" />
+                  <Text fill="#0598ff" layoutX="10.0" layoutY="114.0" stroke="BLACK" strokeType="OUTSIDE" strokeWidth="0.0" text="Statd Date" underline="true" wrappingWidth="92.02835083007812" />
+                  <DatePicker fx:id="startDate" prefHeight="28.0" prefWidth="134.0" promptText="Year/Month" style="-fx-background-color: transparent; -fx-border-color: #0598ff; -fx-border-width: 0px 0px 2px 0px;" />
+                  <Text fill="#0598ff" layoutX="10.0" layoutY="158.0" stroke="BLACK" strokeType="OUTSIDE" strokeWidth="0.0" text="End Date" underline="true" wrappingWidth="92.02835083007812" />
+                  <DatePicker fx:id="endDate" layoutX="10.0" layoutY="163.0" prefHeight="28.0" prefWidth="134.0" promptText="Year/Month" style="-fx-background-color: transparent; -fx-border-color: #0598ff; -fx-border-width: 0px 0px 2px 0px;" />
+                  <Text fill="#0598ff" layoutX="10.0" layoutY="114.0" stroke="BLACK" strokeType="OUTSIDE" strokeWidth="0.0" text="Grade" underline="true" wrappingWidth="92.02835083007812" />
+                  <TextField fx:id="gradeTxt" blendMode="SRC_ATOP" layoutX="10.0" layoutY="119.0" prefHeight="20.0" prefWidth="306.0" style="-fx-background-color: transparent; -fx-border-color: #0598ff; -fx-border-width: 0px 0px 2px 0px;" />
+                  <Text fill="#0598ff" layoutX="10.0" layoutY="248.0" stroke="BLACK" strokeType="OUTSIDE" strokeWidth="0.0" text="Activities" underline="true" wrappingWidth="92.02835083007812" />
+                  <TextField fx:id="activitiesTxt" blendMode="SRC_ATOP" layoutX="10.0" layoutY="254.0" prefHeight="20.0" prefWidth="306.0" promptText="Ex : Volleyballl" style="-fx-background-color: transparent; -fx-border-color: #0598ff; -fx-border-width: 0px 0px 2px 0px;" />
+                  <Text fill="#0598ff" layoutX="10.0" layoutY="292.0" stroke="BLACK" strokeType="OUTSIDE" strokeWidth="0.0" text="Description" underline="true" wrappingWidth="92.02835083007812" />
+                  <TextField fx:id="descriptionTxt" blendMode="SRC_ATOP" layoutX="10.0" layoutY="298.0" prefHeight="20.0" prefWidth="306.0" style="-fx-background-color: transparent; -fx-border-color: #0598ff; -fx-border-width: 0px 0px 2px 0px;" />
+                  <Text fill="#0598ff" layoutX="10.0" layoutY="341.0" stroke="BLACK" strokeType="OUTSIDE" strokeWidth="0.0" text="Skill" underline="true" wrappingWidth="92.02835083007812" />
+                  <TextField fx:id="skillTxt" blendMode="SRC_ATOP" layoutX="10.0" layoutY="340.0" prefHeight="20.0" prefWidth="306.0" style="-fx-background-color: transparent; -fx-border-color: #0598ff; -fx-border-width: 0px 0px 2px 0px;" />
+                  <Button fx:id="save" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" onAction="#saveEducationInfo" pickOnBounds="false" prefHeight="30.0" prefWidth="66.0" style="-fx-background-color: #0598ff;" text="Save" textFill="WHITE" />
+                  <Label fx:id="warning" prefHeight="26.0" prefWidth="66.0" />
+               </children>
+            </VBox>
+         </children>
+      </AnchorPane>
+   </right>
+</BorderPane>

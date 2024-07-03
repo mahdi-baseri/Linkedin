@@ -31,7 +31,7 @@ public class LoginHandler implements HttpHandler {
         String path = exchange.getRequestURI().getPath();
         String response = "";
         String[] pathParts = path.split("/");
-       System.out.println(path);
+      // System.out.println(path);
 
         switch(method) {
             case "GET":

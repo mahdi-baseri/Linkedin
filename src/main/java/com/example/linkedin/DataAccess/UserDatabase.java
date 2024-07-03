@@ -34,10 +34,10 @@ public class UserDatabase {
       statement.setString(1, user.getId());
       statement.setString(2, user.getName());
       statement.setString(3, user.getLastName());
-      statement.setString(4, user.getEmail());
-      statement.setString(5, user.getPhoneNumber());
-      statement.setString(6, user.getPassword());
-      statement.setString(7, user.getCountry());
+      statement.setString(4, user.getCountry());
+      statement.setString(5, user.getEmail());
+      statement.setString(6, user.getPhoneNumber());
+      statement.setString(7, user.getPassword());
 //    here we cant cast Date to java.sql.date and because or that i add the java.sql.Date method
       statement.setDate(8 , user.getCreated_at());
    //   statement.setDate(9, new Date(2023, 6, 4));
