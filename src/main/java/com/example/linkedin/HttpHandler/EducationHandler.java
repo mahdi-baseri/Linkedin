@@ -1,5 +1,6 @@
 package com.example.linkedin.HttpHandler;
 
+import com.example.Client.LoginPage;
 import com.example.linkedin.Controller.EducationController;
 import com.example.linkedin.Controller.UserController;
 import com.example.linkedin.DataAccess.UserDatabase;
@@ -41,7 +42,9 @@ public class EducationHandler implements HttpHandler {
 
         try {
             try {
-                String email = JwtController.verifyToken(exchange);
+               // String email = JwtController.verifyToken(exchange);
+                String email = LoginPage.email;
+                System.out.println(email);
                 if (email == null) {
                     response = "Unauthorized";
                     exchange.sendResponseHeaders(401, response.length());
@@ -57,6 +60,8 @@ public class EducationHandler implements HttpHandler {
             switch (request) {
                 case "POST":
                     response = handlePostRequest(exchange, educationController, pathParts);
+                    System.out.println("suc");
+                    sendResponse(exchange , response);
                     break;
                 default:
                     response = "Method not allowed";
@@ -99,28 +104,35 @@ public class EducationHandler implements HttpHandler {
     private String handlePostRequest(HttpExchange exchange, EducationController educationController, String[] pathParts) throws SQLException, IOException {
         String response = "";
         if (pathParts.length == 2) {
+         //   String token = exchange.getRequestHeaders().getFirst("JWT");
+         //   System.out.println(token);
             System.out.println("inja");
-            String email = JwtController.verifyToken(exchange);
+          //  String email = JwtController.verifyToken(exchange);
+            String email = LoginPage.email;
             System.out.println("ziresh");
             JSONObject jsonObject = getJsonObject(exchange);
             System.out.println(jsonObject);
             if (!isValidJson(jsonObject)) {
+                System.out.println("invaliddddd");
                 response = "Invalid request";
                 exchange.sendResponseHeaders(400, response.length());
                 sendResponse(exchange, response);
                 return response;
             }
             if (email != null) {
+                System.out.println("addddddddd");
                 if (educationController.getEducationByEmailAndSchool(email, jsonObject.getString("school")) == null) {
+                    System.out.println("bavvvvvvvvv");
                     educationController.createEducation(
                             jsonObject.getString("school"),
                             jsonObject.getString("degree"),
                             jsonObject.getString("fieldofstudy"),
                             jsonObject.getString("grade"),
-                            jsonObject.getString("discriptionActivity"),
+                            jsonObject.getString("descriptionActivity"),
                             jsonObject.getString("description"),
                             jsonObject.getString("skill"),
                             email);
+                    System.out.println("currr");
                     response = "Education added successfully";
                     exchange.sendResponseHeaders(200, response.length());
                 } else {

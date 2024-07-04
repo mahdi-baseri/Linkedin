@@ -24,6 +24,7 @@ public class Education {
         this.skills = skills;
         this.grade = grade;
         this.email = email ;
+        this.degree = degree;
     }
     public Education(){
 

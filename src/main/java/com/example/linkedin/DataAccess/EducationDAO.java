@@ -19,7 +19,7 @@ public class EducationDAO {
         statement.executeUpdate();
     }
     public void saveEducationDetail(Education education, String email) throws SQLException {
-        PreparedStatement statement = connection.prepareStatement("INSERT INTO education VALUES (?,?,?,?,?,?,?,?)");
+        PreparedStatement statement = connection.prepareStatement("INSERT INTO educations VALUES (?,?,?,?,?,?,?,?)");
 
         statement.setString(1, education.getNameSchool());
         statement.setString(2, education.getDegree());
@@ -35,7 +35,7 @@ public class EducationDAO {
     }
 
     public void editEducationDetail(Education education, String email, String school) throws SQLException {
-        PreparedStatement statement = connection.prepareStatement("UPDATE education SET nameschool = ?, degree = ?, fieldofstudy = ? , grade = ?, descriptionActivity = ?, description = ?, skill = ?, WHERE email = ? AND nameschool = ?");
+        PreparedStatement statement = connection.prepareStatement("UPDATE educations SET nameschool = ?, degree = ?, fieldofstudy = ? , grade = ?, descriptionActivity = ?, description = ?, skill = ?, WHERE email = ? AND nameschool = ?");
 
         statement.setString(1, education.getNameSchool());
         statement.setString(2, education.getDegree());
@@ -51,7 +51,7 @@ public class EducationDAO {
     }
 
     public ArrayList<Education> getEducations(String email) throws SQLException {
-        PreparedStatement statement = connection.prepareStatement("SELECT * FROM education WHERE email = ?");
+        PreparedStatement statement = connection.prepareStatement("SELECT * FROM educations WHERE email = ?");
         statement.setString(1, email);
         ResultSet resultSet = statement.executeQuery();
         Education education = new Education();
@@ -71,7 +71,7 @@ public class EducationDAO {
     }
 
     public Education getEducation(String email, String school) throws SQLException {
-        PreparedStatement statement = connection.prepareStatement("SELECT * FROM education WHERE email = ? AND nameschool = ?");
+        PreparedStatement statement = connection.prepareStatement("SELECT * FROM educations WHERE email = ? AND nameschool = ?");
         statement.setString(1, email);
         statement.setString(2, school);
         ResultSet resultSet = statement.executeQuery();

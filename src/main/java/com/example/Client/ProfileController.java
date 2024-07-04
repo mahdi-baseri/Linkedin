@@ -2,10 +2,7 @@ package com.example.Client;
 
 import com.example.linkedin.DataAccess.UserDatabase;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.OutputStream;
+import java.io.*;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
@@ -23,8 +20,12 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
+import javafx.scene.shape.Circle;
+import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 //import org.json.JSONObject;
 import org.json.simple.JSONObject;
@@ -38,6 +39,12 @@ public class ProfileController {
     private VBox vbox;
     @FXML
     private Label warning;
+    @FXML
+    private ImageView imageView;
+    @FXML
+    private Label nameLable;
+    @FXML
+    private Button addPhotoBtn;
     @FXML
     private TextField schoolTxt;
     @FXML
@@ -67,9 +74,32 @@ public class ProfileController {
     private String StartDate2;
 
 
-//    public void profileController(ActionEvent event){
-//        vbox.setVisible(true);
-//    }
+    public void profileController(ActionEvent event){
+        if(vbox.isVisible()){
+            vbox.setVisible(false);
+        }else {
+            vbox.setVisible(true);
+        }
+    }
+
+    public void addPhoto() {
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("Image Files", "*.png", "*.jpg", "*.jpeg" , "*.jfif"));
+
+        File selectedFile = fileChooser.showOpenDialog(null);
+        if (selectedFile != null) {
+            Image image = new Image(selectedFile.toURI().toString());
+            imageView.setImage(image);
+
+
+            Circle clip = new Circle();
+            clip.setCenterX(imageView.getFitWidth()/2);
+            clip.setCenterY(imageView.getFitHeight()/2);
+            clip.setRadius(imageView.getFitWidth()/2);
+
+            imageView.setClip(clip);
+        }
+    }
 
 
     public void saveEducationInfo(ActionEvent event) {
@@ -86,6 +116,7 @@ public class ProfileController {
 
 
         if ((school.equals("")) || (degree.equals("")) || (fieldOfStudy.equals("")) || (grade.equals("")) || (activities.equals("")) || (description.equals("")) || (skill.equals(""))) {
+            warning.setTextFill(Color.RED);
             warning.setText("Please compelte all fields");
 
         } else {

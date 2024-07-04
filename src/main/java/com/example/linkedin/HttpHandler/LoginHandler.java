@@ -1,5 +1,6 @@
 package com.example.linkedin.HttpHandler;
 
+import com.example.Client.LoginPage;
 import com.example.linkedin.DataAccess.UserDatabase;
 import com.example.linkedin.Model.User;
 import com.sun.net.httpserver.Headers;
@@ -49,7 +50,9 @@ public class LoginHandler implements HttpHandler {
                             os.close();
                         }
                         else {
+                            LoginPage.email = email;
                             String token = JwtController.createToken(email);
+                            //LoginPage.token = token ;
                             Headers responseHeaders = exchange.getResponseHeaders();
                             responseHeaders.add("JWT", token);
                             response = exchange.getResponseHeaders().toString();
