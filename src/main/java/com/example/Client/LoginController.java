@@ -3,8 +3,6 @@ package com.example.Client;
 import com.example.linkedin.DataAccess.DatabaseConnector;
 import com.example.linkedin.DataAccess.UserDatabase;
 
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
 import java.io.IOException;
 import java.net.HttpURLConnection;
 import java.net.URL;
@@ -21,6 +19,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
 
@@ -43,61 +42,40 @@ public class LoginController {
   private Button registerBtn;
 
 
-  public LoginController() throws SQLException {
-    userDatabase = new UserDatabase();
-    connection = DatabaseConnector.getConnection();
-  }
-
   @FXML
-  private void submit(ActionEvent event) {
+  private void submit(ActionEvent event) throws IOException {
     emailOfUser = email.getText();
     password = passField.getText();
 
-    try {
 
-      if ((email.getText().equals("")) || (passField.equals(""))) {
+      if ((email.getText().equals("")) || (passField.getText().equals(""))) {
+        warnning.setTextFill(Color.RED);
         warnning.setText("Please compelte fields");
 
       } else if (!email.getText().endsWith("@gmail.com")) {
+        warnning.setTextFill(Color.RED);
         warnning.setText("please check your email");
 
       } else {
-        //http://localhost:8000/login/email/password
+
         URL url = new URL("http://localhost:8000/" + "login/" + emailOfUser + "/" + password);
-        HttpURLConnection con = (HttpURLConnection) url.openConnection();
-        con.setRequestMethod("GET");
-        int responseCode = con.getResponseCode();
+        HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+        connection.setRequestMethod("GET");
+        int responseCode = connection.getResponseCode();
 
-        if (responseCode == 200) {  //ok
-          BufferedReader in = new BufferedReader(new InputStreamReader(con.getInputStream(), "utf-8"));
-          String inputline = null;
-          StringBuffer response1 = new StringBuffer();
-          while ((inputline = in.readLine()) != null) {
-            response1.append(inputline);
-          }
-          in.close();
-//          LoginPage.token = con.getHeaderField("JWT");
-//          System.out.println(LoginPage.token);
-
+        if (responseCode == 409) {
+          warnning.setText("User not found.Incorrect password or email");
+        } else if (responseCode == 400) {
+          warnning.setText("Invalid path");
+        } else {
+          warnning.setText("User Login successfully");
           // change scene to profile
           Parent loader = FXMLLoader.load(getClass().getResource("profilee-view.fxml"));
           Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
           stage.setScene(new Scene(loader));
           stage.show();
           //
-
-        } else if (responseCode == 404) {
-          warnning.setText("User not found OR invalid password");
-        } else if (responseCode == 400) {
-          warnning.setText("Invalid Request");
-        } else if (responseCode == 405) {
-          warnning.setText("Methode Not Allowed");
         }
-
-      }
-    }catch(Exception e){
-        warnning.setText("connection failed");
-        e.printStackTrace();
       }
     }
 

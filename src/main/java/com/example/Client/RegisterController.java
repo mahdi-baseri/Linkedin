@@ -1,6 +1,5 @@
 package com.example.Client;
 
-import com.example.linkedin.DataAccess.UserDatabase;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -8,14 +7,10 @@ import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.nio.charset.StandardCharsets;
 import java.sql.SQLException;
-import java.util.Optional;
-import java.util.WeakHashMap;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import com.example.linkedin.Model.User;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -25,7 +20,6 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
-//import org.json.JSONObject;
 import org.json.simple.JSONObject;
 
 public class RegisterController {
@@ -69,109 +63,60 @@ public class RegisterController {
   private Label countryWarning;
   @FXML
   private Label warning;
-  private UserDatabase userDatabase;
-  private boolean validEmail , validId , validPhoneNumber , validEmpty;
 
-  public RegisterController() throws SQLException {
-    userDatabase = new UserDatabase();
-    validEmail =false;
-    validId = false;
-    validPhoneNumber = false;
-    validEmpty = false;
-
-  }
 
 
   @FXML
-  private void checkRegister(ActionEvent event) throws SQLException{
-
-    checkEmail(email.getText());
-    checkId(id.getText());
-    checkPhoneNumber(phoneNumber.getText());
+  private void checkRegister(ActionEvent event) throws SQLException, IOException {
     checkEmpty();
-//    if (!name.getText().isEmpty() && !lastName.getText().isEmpty() && !password.getText().isEmpty() ){
-//      validEmpty = true;
-//    }
-//    User user = new User(id.getText(),name.getText(),lastName.getText(),email.getText(),phoneNumber.getText(),password.getText());
-//    if (validId && validEmpty && validPhoneNumber && validEmail){
-//      userDatabase.addUser(user);
-//      if (userDatabase.idExists(id.getText())){
-//        Alert alert = new Alert(Alert.AlertType.INFORMATION);
-//        alert.setHeaderText("Registered successfully " + name.getText());
-//        Optional<ButtonType> result = alert.showAndWait();
-//        if(!result.isPresent()){
-//
-//        }
-//        // alert is exited, no button has been pressed.
-//        else if(result.get() == ButtonType.OK){
-//          Parent loader = FXMLLoader.load(getClass().getResource("login-page.fxml"));
-//          Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-//
-//          stage.setScene(new Scene(loader));
-//          stage.show();
-//        }
-//        //oke button is pressed
-//        else if(result.get() == ButtonType.CANCEL){
-//
-//        }
-//          // cancel button is pressed
-//
-//      }
-//    }
-        if(checkEmpty() && isValidPassword()) {
-          try {
-            JSONObject json = new JSONObject();
-            json.put("id" , id.getText());
-            json.put("firstname", name.getText());
-            json.put("lastname", lastName.getText());
-            json.put("email", email.getText());
-            json.put("password", password.getText());
-            json.put("country", country.getText());
-            json.put("phonenumber", phoneNumber.getText());
-            System.out.println(json);
-            URL url = new URL("http://localhost:8000/user");
-            HttpURLConnection con = (HttpURLConnection) url.openConnection();
-            con.setRequestProperty("Content-Type", "application/json");
-            con.setRequestMethod("POST");
-            con.setDoOutput(true);
-            OutputStream os = con.getOutputStream();
-            os.write(json.toString().getBytes("UTF-8"));
-            os.flush();
-            os.close();
+    checkEmail(email.getText());
+    checkPhoneNumber(phoneNumber.getText());
 
-            BufferedReader in = new BufferedReader(new InputStreamReader(con.getInputStream(), "utf-8"));
-            String inputline = null;
-            StringBuffer response1 = new StringBuffer();
-            while ((inputline = in.readLine()) != null) {
-              response1.append(inputline);
-            }
-            in.close();
-            String response = response1.toString();
-            System.out.println(response);
+    if (isValidPassword() && checkEmpty()) {
+        JSONObject json = new JSONObject();
+        json.put("id", id.getText());
+        json.put("firstname", name.getText());
+        json.put("lastname", lastName.getText());
+        json.put("email", email.getText());
+        json.put("password", password.getText());
+        json.put("country", country.getText());
+        json.put("phonenumber", phoneNumber.getText());
 
-            if (response.equals("Method not allowed")) {
-              warning.setText("Method not allowed");
-            } else if (response.equals("Internal server error")) {
-              warning.setText("Internal server error");
-            } else if (response.equals("Bad request")) {
-              warning.setText("Bad request");
-            } else if (response.equals("Invalid path")) {
-              warning.setText("Invalid path");
-            } else {
-              Parent loader = FXMLLoader.load(getClass().getResource("login-page.fxml"));
-              Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-              stage.setScene(new Scene(loader));
-              stage.show();
-            }
+        URL url = new URL("http://localhost:8000/user");
+        HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+        connection.setRequestMethod("POST");
+        connection.setDoOutput(true);
+        OutputStream os = connection.getOutputStream();
+        os.write(json.toString().getBytes());
+        os.flush();
+        os.close();
+        int responsecode = connection.getResponseCode() ;
 
-          } catch (Exception e) {
-            warning.setText("connection failed");
-          }
+        if (responsecode == 400) {
+          warning.setText("User info not valid");
+        } else if (responsecode == 409) {
+          warning.setText("Invalid Path");
+        } else {
+          Parent loader = FXMLLoader.load(getClass().getResource("login-page.fxml"));
+          Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+          stage.setScene(new Scene(loader));
+          stage.show();
         }
+    }
   }
 
   private boolean checkEmpty() {
     boolean isFormValid = true;
+
+    if (id.getText().isEmpty()) {
+      idWarning.setText("Empty");
+      idWarning.setTextFill(Color.RED);
+      isFormValid = false ;
+    }
+    else {
+      idWarning.setText("Valid");
+      idWarning.setTextFill(Color.BLUE);
+    }
 
     if (name.getText().isEmpty()) {
       nameWarning.setText("Empty");
@@ -191,7 +136,7 @@ public class RegisterController {
       lastNameWarning.setTextFill(Color.BLUE);
     }
 
-    if (confirmPasswordWarning.getText().isEmpty()) {
+    if (confirmPassword.getText().isEmpty()) {
       confirmPasswordWarning.setText("Empty");
       confirmPasswordWarning.setTextFill(Color.RED);
       isFormValid = false;
@@ -241,11 +186,19 @@ public class RegisterController {
       confirmPasswordWarning.setTextFill(Color.BLUE);
       return true;
     } else {
-      passwordWarning.setText( "Invalid");
-      passwordWarning.setTextFill(Color.RED);
-      confirmPasswordWarning.setText("Invalid");
-      confirmPasswordWarning.setTextFill(Color.RED);
-      return false;
+      if (password.getText().isEmpty() && confirmPassword.getText().isEmpty()) {
+        passwordWarning.setText("Empty");
+        confirmPasswordWarning.setText("Empty");
+        passwordWarning.setTextFill(Color.RED);
+        confirmPasswordWarning.setTextFill(Color.RED);
+        return false;
+      } else {
+        passwordWarning.setText("Invalid");
+        passwordWarning.setTextFill(Color.RED);
+        confirmPasswordWarning.setText("Invalid");
+        confirmPasswordWarning.setTextFill(Color.RED);
+        return false;
+      }
     }
   }
 
@@ -268,46 +221,23 @@ private boolean passwordConfirm() {
     String emailRegex =
         "^[a-zA-Z0-9_+&*-]+(?:\\." + "[a-zA-Z0-9_+&*-]+)*@" + "(?:[a-zA-Z0-9-]+\\.)+[a-z"
             + "A-Z]{2,7}$";
-    Pattern pat = Pattern.compile(emailRegex);
+    Pattern pattern = Pattern.compile(emailRegex);
     if (email.isEmpty()) {
       emailWarning.setText("Empty");
       emailWarning.setTextFill(Color.RED);
 
-    } else if (!pat.matcher(email).matches()) {
+    } else if (!pattern.matcher(email).matches()) {
       emailWarning.setText("Invalid");
       emailWarning.setTextFill(Color.RED);
 
     }
-//    else if (userDatabase.emailExists(email)) {
-//      emailWarning.setText("Email Exists");
-//      emailWarning.setTextFill(Color.RED);
-//    }
     else {
       emailWarning.setText("Valid");
       emailWarning.setTextFill(Color.BLUE);
-      validEmail = true;
-
-    }
-  }
-
-  private void checkId(String id) throws SQLException {
-    if (id.isEmpty()) {
-      idWarning.setText("Empty");
-      idWarning.setTextFill(Color.RED);
-    }
-//    else if (userDatabase.idExists(id)) {
-//      idWarning.setText("Id Exists");
-//      idWarning.setTextFill(Color.RED);
-//    }
-    else {
-      idWarning.setText("Valid");
-      idWarning.setTextFill(Color.BLUE);
-      validId = true;
     }
   }
 
   private void checkPhoneNumber(String number){
-//    String regex = "/^(?:(?:(?:\\+?|00)(98))|(0))?((?:90|91|92|93|99)[0-9]{8})$";
     String regex = "^(?:(?:(?:\\+?|00)(98))|(0))?((?:90|91|92|93|99)[0-9]{8})$";
     Pattern pattern = Pattern.compile(regex);
     Matcher matcher = pattern.matcher(number);
@@ -315,13 +245,13 @@ private boolean passwordConfirm() {
       phoneNumberWarning.setText("Empty");
       phoneNumberWarning.setTextFill(Color.RED);
     }else if (!matcher.matches()){
-      phoneNumberWarning.setText("Inalid");
+      phoneNumberWarning.setText("Invalid");
       phoneNumberWarning.setTextFill(Color.RED);
     }
     else {
+
       phoneNumberWarning.setText("Valid");
       phoneNumberWarning.setTextFill(Color.BLUE);
-      validPhoneNumber = true;
     }
   }
 }

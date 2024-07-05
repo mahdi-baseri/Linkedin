@@ -28,53 +28,27 @@ public class UserHandler implements HttpHandler {
         String[] splittedPath = path.split("/");
         String response = "";
 
-        try {
-            switch (request) {
-                case "GET":
-                    if (splittedPath.length == 3) {
-                        if (splittedPath[2].equals("all")) { // user/all
-                            response = userController.getUsers();
-                            exchange.sendResponseHeaders(200, response.length());
-                            OutputStream os = exchange.getResponseBody();
-                            os.write(response.getBytes());
-                            os.close();
-                        } else { // user/email
-                            response = userController.getUserByEmail(splittedPath[2]);
-                            exchange.sendResponseHeaders(200, response.length());
-                            OutputStream os = exchange.getResponseBody();
-                            os.write(response.getBytes());
-                            os.close();
-                        }
-                    } else {
-                        response = "Invalid path";
-                        exchange.sendResponseHeaders(400, response.length());
-                        OutputStream os = exchange.getResponseBody();
-                        os.write(response.getBytes());
-                        os.close();
-                    }
-                    break;
 
+            switch (request) {
                 case "POST":
                     if (splittedPath.length == 2) { //user
                         JSONObject jsonObject = getJsonObject(exchange);
-                        System.out.println(jsonObject);
-                        if (isValidJson(jsonObject)) {
-                            userController.createUser(
-                                    jsonObject.getString("id"),
-                                    jsonObject.getString("firstname"),
-                                    jsonObject.getString("lastname"),
-                                    jsonObject.getString("country"),
-                                    jsonObject.getString("email"),
-                                    jsonObject.getString("phonenumber"),
-                                    jsonObject.getString("password"));
+                        if (ValidJson(jsonObject)) {
+                            try {
+                                userController.createUser(jsonObject.getString("id"), jsonObject.getString("firstname"), jsonObject.getString("lastname"), jsonObject.getString("country"), jsonObject.getString("email"), jsonObject.getString("phonenumber"), jsonObject.getString("password"));
+                            } catch (SQLException e) {
+                                throw new RuntimeException(e);
+                            }
 
+                            //   LoginPage.name = jsonObject.getString("firstname");
+                           // LoginPage.lastName = jsonObject.getString("lastname");
                             response = "User added successfully";
                             exchange.sendResponseHeaders(200, response.length());
                             OutputStream os = exchange.getResponseBody();
                             os.write(response.getBytes());
                             os.close();
                         } else {
-                            response = "Bad request";
+                            response = "User info not valid";
                             exchange.sendResponseHeaders(400, response.length());
                             OutputStream os = exchange.getResponseBody();
                             os.write(response.getBytes());
@@ -83,42 +57,33 @@ public class UserHandler implements HttpHandler {
                     }
                     else {
                         response = "Invalid path";
-                        exchange.sendResponseHeaders(400, response.length());
+                        exchange.sendResponseHeaders(409, response.length());
                         OutputStream os = exchange.getResponseBody();
                         os.write(response.getBytes());
                         os.close();
                     }
-                default:
-                    response = "Method not allowed";
-                    exchange.sendResponseHeaders(405, response.length());
-                    OutputStream os = exchange.getResponseBody();
-                    os.write(response.getBytes());
-                    os.close();
             }
-        } catch (Exception e) {
-            response = "Internal server error";
-            exchange.sendResponseHeaders(500, response.length());
-            e.printStackTrace();
-        }
     }
 
-    private static JSONObject getJsonObject(HttpExchange exchange) throws IOException {
-        try (InputStream requestBody = exchange.getRequestBody();
-             BufferedReader reader = new BufferedReader(new InputStreamReader(requestBody))) {
-            StringBuilder body = new StringBuilder();
 
-            String line;
-            while ((line = reader.readLine()) != null) {
-                body.append(line);
-            }
-          //  System.out.println(body);
-            return new JSONObject(body.toString());
+   public JSONObject getJsonObject(HttpExchange exchange) throws IOException {
+        InputStream requestBody = null;
+        requestBody = exchange.getRequestBody();
+        BufferedReader reader = new BufferedReader(new InputStreamReader(requestBody));
+        StringBuilder body = new StringBuilder();
+        String line;
+        while ((line = reader.readLine()) != null) {
+            body.append(line);
         }
+        return new JSONObject(body.toString());
     }
 
-    private static boolean isValidJson(JSONObject jsonObject) {
-        return jsonObject.has("id") &&jsonObject.has("firstname") && jsonObject.has("lastname") &&
+    public boolean ValidJson(JSONObject jsonObject) {
+        if(jsonObject.has("id") &&jsonObject.has("firstname") && jsonObject.has("lastname") &&
                 jsonObject.has("email") && jsonObject.has("password") && jsonObject.has("country") &&
-                jsonObject.has("phonenumber");
+                jsonObject.has("phonenumber")){
+            return true ;
+        }
+        return false;
     }
 }

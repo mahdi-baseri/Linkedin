@@ -3,10 +3,8 @@ package com.example.linkedin.HttpHandler;
 import com.example.Client.LoginPage;
 import com.example.linkedin.DataAccess.UserDatabase;
 import com.example.linkedin.Model.User;
-import com.sun.net.httpserver.Headers;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
-import com.example.linkedin.Utils.JwtController;
 
 import java.io.IOException;
 import java.io.OutputStream;
@@ -23,7 +21,6 @@ public class LoginHandler implements HttpHandler {
     public LoginHandler() throws SQLException {
         userController = new UserController();
         userDatabase = new UserDatabase();
-        user = new User();
     }
 
     @Override
@@ -31,62 +28,41 @@ public class LoginHandler implements HttpHandler {
         String method = exchange.getRequestMethod();
         String path = exchange.getRequestURI().getPath();
         String response = "";
-        String[] pathParts = path.split("/");
-      // System.out.println(path);
+        String[] splittedPath = path.split("/");
 
         switch(method) {
             case "GET":
-                if (pathParts.length == 4) { // login/email/password
-                    String email = pathParts[2];
-                    String password = pathParts[3];
+                if (splittedPath.length == 4) {
+                    String email = splittedPath[2];
+                    String password = splittedPath[3];
 
                     try {
-                        user = userDatabase.getUser(email , password);
-                        if (user == null) {
-                            response = "User not found OR invalid password";
-                            exchange.sendResponseHeaders(404, response.length());
+                        user = userController.getUser(email , password);
+                    } catch (SQLException e) {
+                        throw new RuntimeException(e);
+                    }
+                    if (user == null) {
+                            response = "User not found.Incorrect password or email";
+                            exchange.sendResponseHeaders(409, response.length());
                             OutputStream os = exchange.getResponseBody();
                             os.write(response.getBytes());
                             os.close();
                         }
                         else {
-                            LoginPage.email = email;
-                            String token = JwtController.createToken(email);
-                            //LoginPage.token = token ;
-                            Headers responseHeaders = exchange.getResponseHeaders();
-                            responseHeaders.add("JWT", token);
-                            response = exchange.getResponseHeaders().toString();
+                            LoginPage.email = email ;
+                            response = " User Login successfully" ;
                             exchange.sendResponseHeaders(200, response.length());
                             OutputStream os = exchange.getResponseBody();
                             os.write(response.getBytes());
                             os.close();
                         }
-                    } catch (Exception e) {
-                        response = "Error in login user";
-                        exchange.sendResponseHeaders(500, response.length());
-                        System.out.println("Error in login user");
-                        e.printStackTrace();
-                    }
-                    finally {
-                        OutputStream os = exchange.getResponseBody();
-                        os.write(response.getBytes());
-                        os.close();
-                    }
                 } else {
-                    response = "Invalid request";
+                    response = "Invalid path";
                     exchange.sendResponseHeaders(400, response.length());
                     OutputStream os = exchange.getResponseBody();
                     os.write(response.getBytes());
                     os.close();
                 }
-                break;
-
-           default:
-                response = "Method not allowed";
-                 exchange.sendResponseHeaders(405, response.length());
-                OutputStream os = exchange.getResponseBody();
-                os.write(response.getBytes());
-                os.close();
                 break;
         }
     }

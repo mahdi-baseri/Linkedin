@@ -19,7 +19,7 @@ public class Education {
     public Education(String nameSchool, String degree,String fieldStudy, String grade, String descriptionActivity, String description, String skills ,String email) {
         this.nameSchool = nameSchool;
         this.fieldStudy = fieldStudy;
-       this.DescriptionActivity = descriptionActivity;
+        this.DescriptionActivity = descriptionActivity;
         this.Description = description;
         this.skills = skills;
         this.grade = grade;

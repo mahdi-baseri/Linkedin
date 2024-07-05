@@ -14,6 +14,7 @@ import java.util.Date;
 
 public class LoginPage extends Application {
   public static String email = "" ;
+
   @Override
   public void start(Stage stage) throws IOException {
     FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("login-page.fxml"));

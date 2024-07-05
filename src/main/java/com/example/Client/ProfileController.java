@@ -1,24 +1,11 @@
 package com.example.Client;
 
-import com.example.linkedin.DataAccess.UserDatabase;
 
 import java.io.*;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.nio.charset.StandardCharsets;
-import java.sql.SQLException;
-import java.util.Optional;
-import java.util.WeakHashMap;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
-import com.example.linkedin.Model.User;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Node;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -26,8 +13,6 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.stage.FileChooser;
-import javafx.stage.Stage;
-//import org.json.JSONObject;
 import org.json.simple.JSONObject;
 
 public class ProfileController {
@@ -102,9 +87,8 @@ public class ProfileController {
     }
 
 
-    public void saveEducationInfo(ActionEvent event) {
+    public void saveEducationInfo(ActionEvent event) throws IOException {
         this.school = schoolTxt.getText();
-        System.out.println(school);
         this.degree = degreeTxt.getText();
         this.fieldOfStudy = fieldOfStudyTxt.getText();
         this.grade = gradeTxt.getText();
@@ -115,12 +99,10 @@ public class ProfileController {
         this.StartDate2 = startDate.toString();
 
 
-        if ((school.equals("")) || (degree.equals("")) || (fieldOfStudy.equals("")) || (grade.equals("")) || (activities.equals("")) || (description.equals("")) || (skill.equals(""))) {
+        if (!checkEmpty()){
             warning.setTextFill(Color.RED);
             warning.setText("Please compelte all fields");
-
         } else {
-            try {
                 JSONObject json = new JSONObject();
                 json.put("school", schoolTxt.getText());
                 json.put("degree", degreeTxt.getText());
@@ -129,45 +111,34 @@ public class ProfileController {
                 json.put("descriptionActivity", activitiesTxt.getText());
                 json.put("description", descriptionTxt.getText());
                 json.put("skill", skillTxt.getText());
-                System.out.println(json);
-                URL url = new URL("http://localhost:8000" + "/education");
-                HttpURLConnection con = (HttpURLConnection) url.openConnection();
-                con.setRequestProperty("Content-Type", "application/json");
-                con.setRequestMethod("POST");
-                con.setDoOutput(true);
-                OutputStream os = con.getOutputStream();
-                os.write(json.toString().getBytes("UTF-8"));
+                URL url = new URL("http://localhost:8000/education");
+                HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+                connection.setRequestMethod("POST");
+                connection.setDoOutput(true);
+                OutputStream os = connection.getOutputStream();
+                os.write(json.toString().getBytes());
                 os.flush();
                 os.close();
+                int responsecode = connection.getResponseCode() ;
 
-                    BufferedReader in = new BufferedReader(new InputStreamReader(con.getInputStream()));
-                    String inputline = null;
-                    StringBuffer response1 = new StringBuffer();
-                    while ((inputline = in.readLine()) != null) {
-                        response1.append(inputline);
-                    }
-                    in.close();
-                    String response = response1.toString();
-                    System.out.println(response);
-
-                 //  LoginPage.token = con.getHeaderField("JWT");
-                  vbox.setVisible(false);
-
-                if (response.equals("Education already exists")) {
+                if (responsecode == 404) {
                     warning.setText("Education already exists");
-                } else if (response.equals("Unauthorized")) {
-                    warning.setText("Unauthorized");
-                } else if (response.equals("Invalid request")) {
-                    warning.setText("Invalid request");
-                } else {
+                } else if (responsecode == 409) {
+                    warning.setText("Invalid Path");
+                }  else {
                     warning.setText("Education added successfully");
+                    vbox.setVisible(false);
                 }
 
-
-            } catch (Exception e) {
-                warning.setText("connection failed");
-                e.printStackTrace();
-            }
         }
     }
+
+    public Boolean checkEmpty(){
+        if ((school.equals("")) || (degree.equals("")) || (fieldOfStudy.equals("")) || (grade.equals("")) || (activities.equals("")) || (description.equals("")) || (skill.equals(""))) {
+            return false ;
+        }
+        return true ;
+    }
 }
+
+

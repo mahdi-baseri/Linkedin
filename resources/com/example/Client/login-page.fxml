@@ -31,10 +31,7 @@
             <PasswordField fx:id="passField" layoutX="102.0" layoutY="250.0" promptText="Password" style="-fx-background-color: transparent; -fx-border-color: #0598ff; -fx-border-width: 0px 0px 2px 0px;" />
             <FontAwesomeIconView fill="#0598ff" glyphName="USER" layoutX="67.0" layoutY="224.0" size="17" tabSize="18" wrappingWidth="15.771379470825195" />
             <FontAwesomeIconView fill="#0598ff" glyphName="KEY" layoutX="66.0" layoutY="270.0" size="17" tabSize="0" />
-            <Button fx:id="loginBtn" layoutX="100.0" layoutY="353.0" mnemonicParsing="false" onAction="#submit" prefHeight="36.0" prefWidth="61.0" style="-fx-background-color: #0598ff;" text="Login" textFill="#fbfdff">
-               <graphic>
-                  <Label fx:id="warnning" />
-               </graphic></Button>
+            <Button fx:id="loginBtn" layoutX="100.0" layoutY="353.0" mnemonicParsing="false" onAction="#submit" prefHeight="36.0" prefWidth="61.0" style="-fx-background-color: #0598ff;" text="Login" textFill="#fbfdff" />
             <Hyperlink alignment="CENTER" layoutX="105.0" layoutY="453.0" prefHeight="24.0" prefWidth="142.0" text="Forgot Your Password ?" />
             <FontAwesomeIconView fill="#0598ff" glyphName="USERS" layoutX="156.0" layoutY="135.0" size="35" />
             <Text fill="#0598ff" layoutX="136.0" layoutY="173.0" strokeType="OUTSIDE" strokeWidth="0.0" text="User Login" wrappingWidth="97.59994506835938">
@@ -52,6 +49,7 @@
                   <Label fx:id="warnning1" />
                </graphic>
             </Button>
+            <Label fx:id="warnning" alignment="CENTER" contentDisplay="CENTER" layoutX="26.0" layoutY="398.0" prefHeight="18.0" prefWidth="302.0" textAlignment="CENTER" />
          </children>
       </AnchorPane>
    </center>
